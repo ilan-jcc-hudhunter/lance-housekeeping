@@ -21,6 +21,8 @@ const FILTERS: Filter[] = [
   })),
 ];
 
+const HINT_SEEN = 'lance.swipeHintSeen';
+
 /** The room being cleaned stays on top; everything else follows priority. */
 const STATUS_RANK: Record<RoomStatus, number> = { in_progress: 0, not_started: 1, flagged: 1, clean: 2 };
 
@@ -45,8 +47,10 @@ function matchesQuery(room: Room, query: string) {
 export function MyWork({ rooms, now, justFinished, onStart, onComplete, onOpenFlag, onOpenRoom, onReset }: Props) {
   const [filter, setFilter] = useState<FilterId>('all');
   const [query, setQuery] = useState('');
-  const [showHint, setShowHint] = useState(true);
+  const [showHint, setShowHint] = useState(() => !localStorage.getItem(HINT_SEEN));
   const [doneOpen, setDoneOpen] = useState(false);
+
+  useEffect(() => localStorage.setItem(HINT_SEEN, '1'), []);
 
   useEffect(() => {
     if (justFinished) setDoneOpen(true);
