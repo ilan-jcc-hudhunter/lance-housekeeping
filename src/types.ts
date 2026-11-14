@@ -31,7 +31,7 @@ export type Room = {
 
 export type Priority = 'high' | 'medium' | 'low';
 
-export type FilterId = 'all' | 'mine' | 'checkout' | 'refresh' | Priority;
+export type FilterId = 'all' | 'checkout' | 'refresh' | Priority;
 
 export type ToastTone = 'go' | 'done' | 'flag' | 'info';
 

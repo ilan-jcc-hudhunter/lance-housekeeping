@@ -9,9 +9,7 @@ import { RoomCard } from './RoomCard';
 type Filter = { id: FilterId; label: string; test: (room: Room, priority: Priority) => boolean; divider?: boolean };
 
 const FILTERS: Filter[] = [
-  { id: 'all', label: 'All', test: () => true },
-  { id: 'mine', label: 'Assigned to you', test: (room) => room.assignedToMe },
-  { id: 'checkout', label: 'Checkout', test: (room) => room.checkout, divider: true },
+  { id: 'checkout', label: 'Checkout', test: (room) => room.checkout },
   { id: 'refresh', label: 'Refresh', test: (room) => room.service === 'Refresh' },
   ...(['high', 'medium', 'low'] as const).map((p, i) => ({
     id: p,
@@ -67,8 +65,8 @@ export function MyWork({ rooms, now, justFinished, onStart, onComplete, onOpenFl
     .sort((a, b) => (b.finishedAt ?? 0) - (a.finishedAt ?? 0));
   const cleaning = active.find((room) => room.status === 'in_progress')?.number ?? null;
   const matches = (item: Filter) => (room: Room) => item.test(room, priority.get(room.id)!);
-  const current = FILTERS.find((item) => item.id === filter)!;
-  const visible = (list: Room[]) => list.filter((room) => matches(current)(room) && matchesQuery(room, q));
+  const current = FILTERS.find((item) => item.id === filter);
+  const visible = (list: Room[]) => list.filter((room) => (!current || matches(current)(room)) && matchesQuery(room, q));
   const visibleActive = visible(active);
   const visibleDone = visible(done);
 
@@ -84,7 +82,7 @@ export function MyWork({ rooms, now, justFinished, onStart, onComplete, onOpenFl
                 className="chip"
                 data-filter={item.id}
                 aria-pressed={filter === item.id}
-                onClick={() => setFilter(item.id)}
+                onClick={() => setFilter((id) => (id === item.id ? 'all' : item.id))}
               >
                 {item.id in PRIORITY_RANK && <PriorityIcon priority={item.id as Priority} />}
                 {item.label}
