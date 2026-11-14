@@ -23,7 +23,7 @@ Housekeepers update dozens of rooms a shift, often one-handed with a cart in tow
 
 - **Swipe left** to start a room (the timer runs), then swipe left again to finish it. These swipes show **green**.
 - **Swipe right** to flag a room you can't clean: Do Not Disturb, Guest Present, Maintenance Issue, or Other with a note. These swipes show **yellow**.
-- **One room at a time.** You can't start a second room while one is in progress.
+- **One room at a time.** While a room is in progress, you can't start or flag a different room.
 - **Priority.** Each room is High, Medium, or Low based on when the next guest checks in and how dirty the room is. The list is sorted by priority, and you can filter by it.
 - **Filters.** All, High, Medium, Low, Checkout, Refresh.
 - **Room details.** Tap any room to see its priority, guest arrival, room type, status, and activity history. Housekeepers can add a note or photos.

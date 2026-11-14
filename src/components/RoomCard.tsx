@@ -12,7 +12,7 @@ type Props = {
   now: number;
   priority: Priority;
   onOpen: (id: string) => void;
-  /** Number of the room currently being cleaned; starting this one is blocked until it's finished. */
+  /** Number of the room currently being cleaned; start/flag on other rooms is blocked until it's finished. */
   blockedBy: string | null;
   onStart: (id: string) => void;
   onComplete: (id: string) => void;
@@ -131,11 +131,11 @@ export function RoomCard({ room, now, priority, onOpen, blockedBy, onStart, onCo
       onClick={() => !drag.current.axis && onOpen(room.id)}
     >
       {offset > 0 && (
-        <div className={`rail stop ${armedRight ? 'armed' : ''}`} aria-hidden="true">
+        <div className={`rail stop ${armedRight ? 'armed' : ''} ${blockedBy ? 'blocked' : ''}`} aria-hidden="true">
           <span className="rail-icon" style={{ transform: iconScale }}>
             <IconFlag />
           </span>
-          <span>{armedRight ? 'Release to flag' : "Can't clean"}</span>
+          <span>{blockedBy ? `Finish ${blockedBy} first` : armedRight ? 'Release to flag' : "Can't clean"}</span>
         </div>
       )}
       {offset < 0 && (

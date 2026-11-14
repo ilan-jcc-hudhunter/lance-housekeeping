@@ -100,6 +100,12 @@ export function App() {
   function confirmFlag(reason: string, note: string) {
     const room = find(flagId);
     if (!room || room.status === 'clean') return;
+    const current = roomsRef.current.find((r) => r.status === 'in_progress');
+    if (current && current.id !== room.id) {
+      notify('info', `Finish ${current.number} first`);
+      setFlagId(null);
+      return;
+    }
     const trimmed = note.trim() || null;
     const updated = update(room.id, `Flagged · ${reason}`, (r) => ({
       status: 'flagged',
@@ -178,7 +184,16 @@ export function App() {
             onStart={startRoom}
             onComplete={completeRoom}
             onReset={resetRooms}
-            onOpenFlag={(id) => find(id)?.status !== 'clean' && openOverlay(() => setFlagId(id))}
+            onOpenFlag={(id) => {
+              const room = find(id);
+              if (!room || room.status === 'clean') return;
+              const current = roomsRef.current.find((r) => r.status === 'in_progress');
+              if (current && current.id !== id) {
+                notify('info', `Finish ${current.number} first`);
+                return;
+              }
+              openOverlay(() => setFlagId(id));
+            }}
             onOpenRoom={(id) => openOverlay(() => setDetailId(id))}
           />
         ) : (

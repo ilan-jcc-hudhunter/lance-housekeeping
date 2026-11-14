@@ -308,7 +308,8 @@ ul { margin: 0; padding: 0; }
 
 .rail.go { justify-content: flex-end; background: var(--left); color: var(--left-on); }
 .rail.go.armed { background: var(--left-deep); }
-.rail.go.blocked { background: #d9dadd; color: #4a4e55; }
+.rail.go.blocked,
+.rail.stop.blocked { background: #d9dadd; color: #4a4e55; }
 .rail.stop { justify-content: flex-start; background: var(--right); color: var(--right-on); }
 .rail.stop.armed { background: var(--right-deep); }
 
