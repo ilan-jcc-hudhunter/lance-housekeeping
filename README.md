@@ -2,6 +2,8 @@
 
 A frontend prototype of a redesigned **My Work** screen for Lance's housekeeping app. Housekeepers update rooms with one swipe instead of taps and buttons.
 
+> **Testing tip:** type `reset` in the search bar and press **Enter** to reset every room to not started, with no completed or flagged rooms.
+
 ## Run it
 
 Requires [Node.js](https://nodejs.org) 18 or newer.

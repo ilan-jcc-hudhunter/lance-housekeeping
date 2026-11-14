@@ -113,6 +113,24 @@ export function App() {
     notify('flag', `${room.number} flagged`);
   }
 
+  function resetRooms() {
+    const next = roomsRef.current.map((room): Room => ({
+      ...room,
+      status: 'not_started',
+      condition: 'dirty',
+      startedAt: null,
+      elapsedMs: null,
+      finishedAt: null,
+      flagReason: null,
+      flagNote: null,
+      history: [],
+    }));
+    roomsRef.current = next;
+    setRooms(next);
+    setJustFinished(null);
+    notify('info', 'All rooms reset');
+  }
+
   function openOverlay(open: () => void) {
     returnFocus.current = document.activeElement instanceof HTMLElement ? document.activeElement : null;
     open();
@@ -159,6 +177,7 @@ export function App() {
             justFinished={justFinished}
             onStart={startRoom}
             onComplete={completeRoom}
+            onReset={resetRooms}
             onOpenFlag={(id) => find(id)?.status !== 'clean' && openOverlay(() => setFlagId(id))}
             onOpenRoom={(id) => openOverlay(() => setDetailId(id))}
           />

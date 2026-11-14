@@ -32,6 +32,7 @@ type Props = {
   onComplete: (id: string) => void;
   onOpenFlag: (id: string) => void;
   onOpenRoom: (id: string) => void;
+  onReset: () => void;
 };
 
 function matchesQuery(room: Room, query: string) {
@@ -41,7 +42,7 @@ function matchesQuery(room: Room, query: string) {
   return hay.includes(query);
 }
 
-export function MyWork({ rooms, now, justFinished, onStart, onComplete, onOpenFlag, onOpenRoom }: Props) {
+export function MyWork({ rooms, now, justFinished, onStart, onComplete, onOpenFlag, onOpenRoom, onReset }: Props) {
   const [filter, setFilter] = useState<FilterId>('all');
   const [query, setQuery] = useState('');
   const [showHint, setShowHint] = useState(true);
@@ -101,6 +102,13 @@ export function MyWork({ rooms, now, justFinished, onStart, onComplete, onOpenFl
             spellCheck={false}
             value={query}
             onChange={(event) => setQuery(event.target.value)}
+            onKeyDown={(event) => {
+              if (event.key !== 'Enter' || q !== 'reset') return;
+              onReset();
+              setQuery('');
+              setFilter('all');
+              event.currentTarget.blur();
+            }}
           />
           {query && (
             <button type="button" className="clear-search" aria-label="Clear search" onClick={() => setQuery('')}>
