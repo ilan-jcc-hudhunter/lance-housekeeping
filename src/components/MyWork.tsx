@@ -9,14 +9,13 @@ import { RoomCard } from './RoomCard';
 type Filter = { id: FilterId; label: string; test: (room: Room, priority: Priority) => boolean; divider?: boolean };
 
 const FILTERS: Filter[] = [
-  { id: 'checkout', label: 'Checkout', test: (room) => room.checkout },
-  { id: 'refresh', label: 'Refresh', test: (room) => room.service === 'Refresh' },
-  ...(['high', 'medium', 'low'] as const).map((p, i) => ({
+  ...(['high', 'medium', 'low'] as const).map((p) => ({
     id: p,
     label: PRIORITY_LABEL[p],
     test: (_: Room, priority: Priority) => priority === p,
-    divider: i === 0,
   })),
+  { id: 'checkout', label: 'Checkout', test: (room) => room.checkout, divider: true },
+  { id: 'refresh', label: 'Refresh', test: (room) => room.service === 'Refresh' },
 ];
 
 const HINT_SEEN = 'lance.swipeHintSeen';
