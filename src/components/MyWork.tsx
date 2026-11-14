@@ -9,6 +9,7 @@ import { RoomCard } from './RoomCard';
 type Filter = { id: FilterId; label: string; test: (room: Room, priority: Priority) => boolean; divider?: boolean };
 
 const FILTERS: Filter[] = [
+  { id: 'all', label: 'All', test: () => true },
   ...(['high', 'medium', 'low'] as const).map((p) => ({
     id: p,
     label: PRIORITY_LABEL[p],
