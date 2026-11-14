@@ -121,7 +121,7 @@ ul { margin: 0; padding: 0; }
   flex: 1;
   min-height: 0;
   overflow: auto;
-  padding: 8px 16px 18px;
+  padding: 0 16px 18px;
   overscroll-behavior: contain;
 }
 
@@ -129,8 +129,10 @@ ul { margin: 0; padding: 0; }
   position: sticky;
   top: 0;
   z-index: 4;
+  margin: 0 -16px;
+  padding: 8px 16px;
   background: #fff;
-  padding-bottom: 8px;
+  box-shadow: 0 -12px 0 #fff;
 }
 
 .search {
